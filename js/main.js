@@ -1,48 +1,66 @@
-const ul = document.querySelector('#tasks');
+const tasks = document.querySelector('#tasks');
 const addTask = document.querySelector('#addTask');
 const taskInput = document.querySelector('#newTask');
-const completedTask = document.querySelector('#completed-tasks');
+const completedTasks = document.querySelector('#completed-tasks');
 
 addTask.onclick = () => {
-    taskInput.value == '' ? console.log('beep boop') : createNewTask();
+    if(taskInput.value){
+        addTodo(taskInput.value);
+    }
     taskInput.value = '';
     taskInput.focus();
 };
 
-const createNewTask = () => {
-    // creating task li
-    const items = ul.appendChild(document.createElement('li'));
-    items.innerHTML = taskInput.value;
-    // creating delete button
-    const completeButton = document.createElement('button');
-    items.appendChild(completeButton).innerHTML = 'Finish';
-    items.appendChild(completeButton).style.cssFloat = 'right';
-    completeButton.onclick = () => {
-        deleteTask(completeButton)
-        items.appendChild(completeButton).style.display = 'none';
-        items.appendChild(editButton).style.display = 'none';
-        completedTask.appendChild(items);
-    };
-    // creating edit button
-    const editButton = document.createElement('button');
-    items.appendChild(editButton).innerHTML = 'Edit';
-    items.appendChild(editButton).style.cssFloat = 'right';
-    editButton.onclick = () => editTask(items, completeButton, editButton);
+const finishTodo = (todo) => {
+    tasks.removeChild(todo);
+    todo.classList.add('todoitem--done');
+    completedTasks.appendChild(todo)
 }
 
-const deleteTask = (tag) => {
-    let item = tag.parentNode;
-    ul.removeChild(item);
+const editTodo = (todo) => {
+    const newText = prompt('Novo valor');
+    const todoText = todo.querySelector('.todoitem__text');
+    todoText.innerHTML = newText;
 }
 
-const editTask = (tag, tag2, tag3) => {
-    const name = prompt('New name');
-    tag.innerHTML = name;
-    tag.appendChild(tag2)
-    tag.appendChild(tag2).innerHTML = 'Finish';
-    tag.appendChild(tag2).style.cssFloat = 'right';
-    tag.appendChild(tag3).innerHTML = 'Edit';
-    tag.appendChild(tag3).style.cssFloat = 'right';
+const addTodo = (text) => {
+    const todo = document.createElement('li');
+    todo.classList.add("todoitem");
+
+    const todoText = document.createElement('span');
+    todoText.classList.add("todoitem__text");
+    todoText.innerHTML = text;
+    
+    const actionButtons = createActionButtons({
+        onFinish: () => finishTodo(todo),
+        onEdit: () => editTodo(todo),
+    });
+
+    todo.appendChild(todoText);
+    todo.appendChild(actionButtons)
+
+    tasks.appendChild(todo);
+
+    return todo;
 }
 
-// TODO: refatorar esse código feio com funções, legibilidade e organização
+const createActionButtons = ({ onFinish, onEdit }) => {
+    const actionButtons = document.createElement('div');
+    actionButtons.classList.add("todoitem__actions");
+
+    const completeButton = createActionButton("Finish", onFinish)
+    const editButton = createActionButton("Edit", onEdit);
+    
+    actionButtons.appendChild(editButton);
+    actionButtons.appendChild(completeButton);
+
+    return actionButtons;
+}
+
+const createActionButton = (text, onClick) => {
+    const actionButton = document.createElement('button');
+    actionButton.classList.add("todoitem__button");
+    actionButton.innerHTML = text;
+    actionButton.onclick = onClick;
+    return actionButton;
+}

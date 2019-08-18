@@ -5,24 +5,33 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link rel="stylesheet" href="css/style.css">
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <link rel="icon" href="assets/favicon.png">
     <title>Todo App</title>
 </head>
 <body>
-    <center>
-        <h1>Todo List</h1>
-        <hr>
-        <br />
-        <h3>What I need todo?</h3>
-        <input type="text" id="newTask" />
-        <br />
-        <button type="submit" id="addTask">Submit task</button><br><br>
-        <h4>What I am doing</h4>
-        <ul id="tasks"></ul>
-        <h4 id="done">What I've done</h4>
-        <ul id="completed-tasks"></ul>
-    </center>
+    <main class="todoapp">
+        <header class="header">
+            <h1 class="header__title">Todo List</h1>
+            <hr>
+            <h2>What I need todo?</h3>
+        </header>
+        
+        <div class="addtodo">
+            <input class="addtodo__input" type="text" id="newTask" />
+            <button class="addtodo__submit" type="submit" id="addTask">Submit task</button>
+        </div>
+        
+        <section class="todolistcontainer">
+            <h3>What I am doing</h4>
+            <ul class="todolist" id="tasks"></ul>
+        </section>
+
+        <section class="todolistcontainer">
+            <h3>What I've done</h4>
+            <ul class="todolist" id="completed-tasks"></ul>
+        </section>
+        
+    </main>
     <script src="js/main.js"></script>
 </body>
 </html>
