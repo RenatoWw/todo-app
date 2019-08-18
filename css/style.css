@@ -21,3 +21,7 @@ li {
     border-radius: 6px;
     background-color:ghostwhite;
 }
+
+#done {
+    margin-top: 35px;
+}
